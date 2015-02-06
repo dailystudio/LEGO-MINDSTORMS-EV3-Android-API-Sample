@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">LegoEV3Sample</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name" translatable="false">LegoEV3Sample</string>
+    <string name="tips">Welcome to use LEGO MINDSTORMS EV3 Android API Sample APP!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="connect">Connect</string>
+    <string name="motorcontrol">Motor Control</string>
+    <string name="speed">Speed(0-100)</string>
+    <string name="startmotor">Start Motor</string>
+    <string name="milliseconds">Time(milliseconds)</string>
+    <string-array name="ports">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>All</item>
+    </string-array>
 </resources>

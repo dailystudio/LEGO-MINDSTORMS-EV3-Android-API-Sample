@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">设置</string>
+    <string name="connect">连接</string>
+    <string name="tips">欢迎使用LEGO MINDSTORMS EV3 Android API 示例程序！</string>
+    <string name="milliseconds">时间（毫秒）</string>
+    <string name="motorcontrol">电机控制</string>
+    <string name="speed">速度（0-100）</string>
+    <string name="startmotor">启动电机</string>
+    <string-array name="ports">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>所有</item>
+    </string-array>
+</resources>

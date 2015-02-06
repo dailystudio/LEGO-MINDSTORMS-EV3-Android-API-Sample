@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,16 +20,18 @@ import com.charlie.ev3.OutputPort;
 
 public class MainActivity extends ActionBarActivity implements BrickChangedListener{
     private Brick b = new Brick(new BluetoothCommunication());
+    private TextView textView;
+    private EditText speed,time;
+    private Spinner spinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try{
-            b.connect();
-            b.directCommand.playTone(100,(short)500,(short)1000);
-        }catch(Exception ex){
-            Toast.makeText(this,ex.getMessage(),Toast.LENGTH_LONG).show();
-        }
+        textView = (TextView)findViewById(R.id.textView);
+        speed = (EditText)findViewById(R.id.speed);
+        time = (EditText)findViewById(R.id.milliseconds);
+        spinner = (Spinner)findViewById(R.id.port);
+        spinner.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,getResources().getStringArray(R.array.ports)));
     }
 
 
@@ -52,9 +57,21 @@ public class MainActivity extends ActionBarActivity implements BrickChangedListe
         return super.onOptionsItemSelected(item);
     }
 
-    public void click(View view){
+    public void connect(View view){
         try{
-            b.directCommand.timeMotorSpeed(100, 1000,true,OutputPort.A);
+            b.connect();
+            b.directCommand.playTone(100,(short)500,(short)1000);
+        }catch(Exception ex){
+            Toast.makeText(this,ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void start(View view){
+        try{
+            OutputPort outputPort = OutputPort.ALL;
+            for(OutputPort o:OutputPort.values())
+                if(o.ordinal() == spinner.getSelectedItemPosition()) outputPort = o;
+            b.directCommand.timeMotorSpeed(Integer.parseInt(speed.getText().toString()),Integer.parseInt(time.getText().toString()),true,outputPort);
         }catch(Exception ex){
             Toast.makeText(this,ex.getMessage(),Toast.LENGTH_LONG).show();
         }
@@ -62,6 +79,14 @@ public class MainActivity extends ActionBarActivity implements BrickChangedListe
 
     @Override
     public void brickChanged() {
-        ((TextView)findViewById(R.id.textView)).setText("brickChanged" + b.ports.get(InputPort.A).getSIValue());
+        textView.setText(
+                "端口1："+b.ports.get(InputPort.One)+
+                "端口2："+b.ports.get(InputPort.Two)+
+                "端口3："+b.ports.get(InputPort.Three)+
+                "端口4："+b.ports.get(InputPort.Four)+
+                "端口A："+b.ports.get(InputPort.A)+
+                "端口B："+b.ports.get(InputPort.B)+
+                "端口C："+b.ports.get(InputPort.C)+
+                "端口D："+b.ports.get(InputPort.D));
     }
 }
