@@ -1,0 +1,4 @@
+include ':app'
+include 'legoev3'
+
+project(':legoev3').projectDir = new File('../LEGO-MINDSTORMS-EV3-Android-API/legoev3')
